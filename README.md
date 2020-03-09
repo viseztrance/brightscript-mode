@@ -1,1 +1,1 @@
-# simple-brightscript-mode
+# brightscript-mode
