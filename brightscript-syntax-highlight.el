@@ -31,9 +31,9 @@
 ;;; Code:
 
 (defconst brightscript-syntax-highlight-reserved-keywords
-  '("and" "as" "dim" "each" "else" "end" "end for" "end function" "endif" "end sub"
-    "endwhile" "end if" "end while" "exit" "false" "for" "function" "goto" "if" "in"
-    "library" "line_num" "m*" "next" "objfun" "or" "pos" "print" "rem" "return" "rnd"
+  '("and" "as" "dim" "each" "else" "elseif" "end" "end for" "end function" "endif"
+    "end sub" "endwhile" "end if" "end while" "exit" "false" "for" "function" "goto" "if"
+    "in" "library" "line_num" "m*" "next" "objfun" "or" "pos" "print" "rem" "return" "rnd"
     "step" "stop" "sub" "tab" "then" "to" "true" "type" "while")
   "BrightScript keywords.")
 
@@ -90,11 +90,11 @@
 (defvar brightscript-syntax-highlight-font-lock
   (let
       ((reserved-keywords-regexp
-        (regexp-opt brightscript-syntax-highlight-reserved-keywords 'words))
+        (regexp-opt brightscript-syntax-highlight-reserved-keywords 'symbols))
        (primitives-regexp
-        (regexp-opt brightscript-syntax-highlight-primitives 'words))
+        (regexp-opt brightscript-syntax-highlight-primitives 'symbols))
        (global-functions-regexp
-        (regexp-opt brightscript-syntax-highlight-global-functions 'words))
+        (regexp-opt brightscript-syntax-highlight-global-functions 'symbols))
        (objects-regexp
         (regexp-opt brightscript-syntax-highlight-objects 'words)))
     `(
@@ -102,7 +102,7 @@
       ("^[ \t]*\\(?:sub\\|function\\)\\(?:[ \t]*\\)?\\([a-z0-9_]+\\)[^( \t\n]*"
        (1 font-lock-function-name-face)
        ;; Matches function arguments
-       ("\\([a-z0-9_]+\\).*?\\(?:,\\|)\\)"
+       ("\\([a-z0-9_\$%!#]+\\).*?\\(?:,\\|)\\)"
         (save-excursion
           (goto-char (match-end 0))
           (backward-char)
@@ -120,7 +120,7 @@
       ;; Matches the global `m' var
       ("\\_<\\(m\\)\\." 1 font-lock-variable-name-face)
       ;; Matches comments in the `REM' format
-      ("^REM\\(.*\\)?$" . font-lock-comment-face)
+      ("^REM.*$" 0 font-lock-comment-face prepend)
       (,objects-regexp 0 'brightscript-syntax-highlight-objects-face append)
       (,primitives-regexp . font-lock-type-face)
       (,reserved-keywords-regexp . font-lock-builtin-face)

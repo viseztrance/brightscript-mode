@@ -1,4 +1,4 @@
-;;; brightscript-ident.el --- Brightscript indentation -*- lexical-binding: t; -*-
+;;; brightscript-indent.el --- Brightscript indentation -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2020 Daniel Mircea, Free Software Foundation, Inc.
 
@@ -42,13 +42,13 @@
 (defun brightscript-indent-start-of-block-p ()
   "Check if current line is the start of a block such as function or loop construct."
   (or
-   (looking-at-p "^[ \t]*\\_<\\(sub\\|function\\|if\\|else\\|while\\|for\\)\\_>")
+   (looking-at-p "^[ \t]*\\_<\\(sub\\|function\\|if\\|else\\|elseif\\|while\\|for\\)\\_>")
    (looking-at-p ".*?\{[ \t]*$")))
 
 (defun brightscript-indent-end-of-block-p ()
   "Check if current line is the end of a block such as function or loop construct."
   (or
-   (looking-at-p "^[ \t]*\\_<\\(end\\|endif\\|endfor\\|endwhile\\|else\\)\\_>")
+   (looking-at-p "^[ \t]*\\_<\\(end\\|endif\\|endfor\\|endwhile\\|else\\|elseif\\)\\_>")
    (looking-at-p "^[ \t]*\}\,?")))
 
 (defun brightscript-indent-go-to-previous-non-blank-line ()
