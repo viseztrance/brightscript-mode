@@ -51,37 +51,30 @@
    (looking-at-p "^[ \t]*\\_<\\(end\\|endif\\|endfor\\|endwhile\\|else\\)\\_>")
    (looking-at-p "^[ \t]*\}\,?")))
 
-(defun brightscript-indent-start-and-end-block-p ()
-  "Check if current line is an else statement."
-  (looking-at "^[ \t]*\\_<\\(else\\)\\_>"))
+(defun brightscript-indent-go-to-previous-non-blank-line ()
+  "Jumps the previous non blank line."
+  (let ((found))
+    (while (not (or found (bobp)))
+      (forward-line -1)
+      (unless (looking-at "^[ \t]*$")
+        (setq found t)))))
 
 (defun brightscript-indent-line-function ()
   "Indent current line as Brightscript code."
   (interactive)
   (beginning-of-line)
-  (if (bobp)
-      (indent-line-to 0)
-    (let ((not-indented t) (new-indentation 0))
-      (if (brightscript-indent-end-of-block-p)
-          (save-excursion
-            (forward-line -1)
-            (setq new-indentation (- (current-indentation) brightscript-indent-offset)))
-        (save-excursion
-          (while not-indented
-            (forward-line -1)
-            (if (brightscript-indent-end-of-block-p)
-                (progn
-                  (if (brightscript-indent-start-and-end-block-p)
-                      (setq new-indentation (+ (current-indentation) brightscript-indent-offset))
-                    (setq new-indentation (current-indentation)))
-                  (setq not-indented nil))
-              (if (brightscript-indent-start-of-block-p)
-                  (progn
-                    (setq new-indentation (+ (current-indentation) brightscript-indent-offset))
-                    (setq not-indented nil))
-                (if (bobp)
-                    (setq not-indented nil))))))
-        (brightscript-indent-perform new-indentation)))))
+  (let ((new-indentation 0)
+        (main-line-ends-block (brightscript-indent-end-of-block-p))
+        (offset 0))
+    (unless (bobp)
+      (save-excursion
+        (brightscript-indent-go-to-previous-non-blank-line)
+        (if (brightscript-indent-start-of-block-p)
+            (setq offset brightscript-indent-offset))
+        (if main-line-ends-block
+            (setq offset (- brightscript-indent-offset)))
+        (setq new-indentation (+ (current-indentation) offset))))
+    (brightscript-indent-perform new-indentation)))
 
 (provide 'brightscript-indent)
 
