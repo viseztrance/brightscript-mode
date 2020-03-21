@@ -4,7 +4,7 @@
 
 ;; Author: Daniel Mircea <daniel@viseztrance.com>
 ;; URL: https://github.com/viseztrance/brightscript-mode
-;; Version: 0.1.0
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "26.3"))
 ;; Maintainer: daniel@viseztrance.com
 ;; Created: Mar 2020
