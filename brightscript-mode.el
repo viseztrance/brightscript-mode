@@ -50,16 +50,11 @@
 (define-derived-mode brightscript-mode prog-mode "BrightScript"
   "Major mode for editing BrightScript code."
   (setq-local indent-line-function 'brightscript-indent-line-function)
-  (setq-local font-lock-defaults '(brightscript-syntax-highlight-font-lock))
+  (setq-local font-lock-defaults '(brightscript-syntax-highlight-font-lock nil t))
 
   (setq-local comment-start "'")
   (setq-local comment-end "")
   (set-syntax-table brightscript-mode-syntax-table))
-
-(defun brightscript-mode-case-insensitive-advice ()
-  "Treat buffer as case insensitive."
-  (setq-local font-lock-keywords-case-fold-search t))
-(advice-add 'brightscript-mode :after #'brightscript-mode-case-insensitive-advice)
 
 (provide 'brightscript-mode)
 
