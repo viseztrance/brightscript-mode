@@ -17,7 +17,7 @@ Add the following lines to your emacs config:
 
 ## Configuration
 
-Indentation defaults to two spaces. Change `brightscript-indent-offset` to adjust this value.
+Indentation defaults to two spaces. Change `brightscript-mode-indent-offset` to adjust this value.
 
 ## License
 
