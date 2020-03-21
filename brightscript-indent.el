@@ -69,10 +69,10 @@
     (unless (bobp)
       (save-excursion
         (brightscript-indent-go-to-previous-non-blank-line)
-        (if (brightscript-indent-start-of-block-p)
-            (setq offset brightscript-indent-offset))
-        (if main-line-ends-block
-            (setq offset (- brightscript-indent-offset)))
+        (when (brightscript-indent-start-of-block-p)
+          (setq offset brightscript-indent-offset))
+        (when main-line-ends-block
+          (setq offset (- brightscript-indent-offset)))
         (setq new-indentation (+ (current-indentation) offset))))
     (brightscript-indent-perform new-indentation)))
 
