@@ -1,4 +1,4 @@
-# brightscript-mode
+# Brightscript mode for Emacs
 
 [![MELPA](https://melpa.org/packages/brightscript-mode-badge.svg)](https://melpa.org/#/brightscript-mode)
 
@@ -14,21 +14,29 @@ The package is available on MELPA. Run the following to set it up:
 ```
 M-x package-install brightscript-mode
 ```
-Then add `(require 'brightscript-mode)` to user emacs init file.
+
+Then add the following lines to your emacs init file:
+
+```elisp
+(require 'brightscript-mode)
+(add-to-list 'auto-mode-alist '("\\.brs\\'" . brightscript-mode))
+```
 
 ### Manual installation
 
-Add the following lines to your emacs config:
+Clone this repo or download "brightscript-mode.el" and then reference it in your config file:
 
 ```elisp
 (add-to-list 'load-path "/path/to/brightscript-mode.el")
-
-(require 'brightscript-mode)
 ```
 
 ## Configuration
 
-Indentation defaults to two spaces. Change `brightscript-mode-indent-offset` to adjust this value.
+Indentation defaults to two spaces. Change `brightscript-mode-indent-offset` to adjust this value:
+
+```elisp
+(setq brightscript-mode-indent-offset 4)
+```
 
 ## License
 
