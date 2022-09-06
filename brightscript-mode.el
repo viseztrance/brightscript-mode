@@ -186,6 +186,10 @@
     (modify-syntax-entry ?\n ">" table)
     table))
 
+(defvar brightscript-imenu-generic-expression
+  '(("Function" "^[Ff]unction +\\([a-zA-Z_]+\\)" 1)
+    ("Function" "^[Ss]ub +\\([a-zA-Z_]+\\)" 1)))
+
 ;;;###autoload
 (define-derived-mode brightscript-mode prog-mode "BrightScript"
   "Major mode for editing BrightScript code."
@@ -194,7 +198,9 @@
 
   (setq-local comment-start "'")
   (setq-local comment-end "")
-  (set-syntax-table brightscript-mode-syntax-table))
+  (set-syntax-table brightscript-mode-syntax-table)
+
+  (setq-local imenu-generic-expression brightscript-imenu-generic-expression))
 
 (provide 'brightscript-mode)
 
